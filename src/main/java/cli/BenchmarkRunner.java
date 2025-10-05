@@ -64,25 +64,6 @@ public class BenchmarkRunner {
 
         tracker.snapshot("extract_all", n);
         System.out.printf("  Extract all: %d ns\n", extractTime);
-
-        // Test 4: Increase key operations
-        if (n <= 1000) { // Only for small sizes
-            tracker.reset();
-            MaxHeap heap3 = new MaxHeap(randomArray, tracker);
-            startTime = System.nanoTime();
-
-            for (int i = 0; i < Math.min(n, 100); i++) {
-                try {
-                    heap3.increaseKey(i, randomArray[i] + 100);
-                } catch (Exception e) {
-                    // Skip if index issues
-                }
-            }
-            long increaseKeyTime = System.nanoTime() - startTime;
-
-            tracker.snapshot("increase_key", n);
-            System.out.printf("  Increase key: %d ns, Valid: %b\n", increaseKeyTime, heap3.isValidMaxHeap());
-        }
     }
 
     private static int[] generateRandomArray(int n, Random random) {
